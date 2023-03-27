@@ -9,11 +9,13 @@
     <link rel="stylesheet" href="stylesheet.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">"
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+
+    <script src="/IWA1/scripts.js"></script>
 </head>
 <body>
     <header class="header">
-        <h1>Tally Count</h1>
+        <h1 class="header_title">Tally Count</h1>
     </header>
     <aside class="controls">
         <label>
@@ -35,11 +37,17 @@
     </aside>
 
     <main class="counter">
-        <input class="counter_value" readonly value="10">
-        <button class="counter_button">-</button>
-        <button class="counter_button">+</button>
+        <input class="counter_value" readonly value="1000"/>
+        <div class="counter_actions">
+            <button class="counter_button"
+            counter_button_first>-</button>
+            <button class="counter_button">+</button>
+        </div>
+        
     </main>
 
-    <footer></footer>
+    <footer class="footer">
+        Inspired by <a class="footer_link" href="https://tallycount.app/">Tally Count</a>. Note that this is merely a student practice projectfor learning JavaScript.
+    </footer>
 </body>
 </html>

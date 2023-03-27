@@ -7,17 +7,31 @@ body {
     background: var(--color-medium-grey);
     color: var(--color-white);
     font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+html{
+    height: 100vh;
 }
 :root {
     --color-green: #31c48d;
     --color-white: #ffffff;
     --color-dark-grey: #33333d;
-    --color-medium-grey: #424250;
-    --color-ligh-grey: #d2d6dc;
+    --color-medium-grey: #303038;
+    --color-light-grey: #9ca3ae;
 }
 
 .header {
     text-align: center;
+}
+
+.header_title{
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--color-light-grey);
 }
 
 .controls{
@@ -33,4 +47,46 @@ body {
     height: 15rem;
     text-align: center;
     font-size: 3rem;
+    font-weight: 900;
+    background: none;
+    color: var(--color-white);
+    border-width: 0;
+    border-bottom: 1px solid var(--color-light-grey);
+}
+
+.counter_actions{
+    display: flex;
+}
+
+.counter_button{
+    background: none;
+    width: 50%;
+    border-width: 1px;
+    color: var(--color-light-grey);
+    font-size: 3rem;
+    height: 10rem;
+    border-bottom: 1px solid var(--color-light-grey);
+    transition: transform 0.3s;
+    transform: translateY(0);
+}
+
+.counter_button:active{
+    background: var(--color-medium-grey);
+    transform: translateY(2%);
+}
+
+.counter_button_first{
+    border-right:1px solid var(--color-light-grey);
+}
+
+.footer{
+    background: var(--color-dark-grey);
+    color: var(--color-light-grey);
+    padding: 2rem;
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+.footer_link{
+    color: var(--color-white);
 }
