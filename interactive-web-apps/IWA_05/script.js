@@ -1,37 +1,45 @@
 FREE_WARNING = 'Free shipping only applies to single customer orders'
 BANNED_WARNING = 'Unfortunately we do not ship to your country of residence'
-NONE_SELECTED = '0'
+NONE_SELECTED = 0
 
-let location = 'RSA'
-let currency = 'R'
-let shipping = 400
-let customers = 1
+location = 'RSA'
+currency = 'R'
+shipping = 0
+customers = 1
 
-function calcShipping(){
-    if (location === 'RSA') { shipping = 400 && currency === 'R' }
-    if (location === 'NAM'){ shipping = 600 && currency==='$'}
-else {shipping = 800 && currency==='$'}
-console.log(currency, shipping)
-}
-
+//selecting the number of items
 shoes = 300 * 1
 toys = 100 * 5
-shirts = 150 * 'NONE_SELECTED'
+shirts = 150 * NONE_SELECTED
 batteries = 35 * 2
-pens = 5 * 'NONE_SELECTED' 
-
+pens = 5 * NONE_SELECTED 
 usersCost = shoes + toys + shirts + batteries + pens
 
+// shipping cost
+
+if (location == 'RSA' && usersCost < 1000) { 
+    shipping = 400 
+    currency = 'R'
+} 
+else if (location === 'NAM' && usersCost < 60){ 
+    shipping = 600 
+    currency ='$'}
+else {
+    shipping = 800 
+    currency ='$'}
+
 // free shipping
-function freeShipping(){
-    if(location == 'RSA' || location == 'NAM' && usersCost >= 1000){
+if(location === 'RSA' && usersCost >= 1000){
         shipping = 0
-    }
-    if (shipping = 0 && customers !== 1) { console.log(FREE_WARNING) }
-
+}else if (location === 'NAM' && usersCost >= 60){
+    shipping = 0
 }
-calcShipping(location)
-freeShipping(usersCost)
 
-// location ='NK' ? console.log(BANNED_WARNING) : console.log('price', currency, usersCost + shipping)
+if (shipping == 0 && customers !== 1) { console.log(FREE_WARNING) }
+
+// total cost
+
+totalCost = usersCost + shipping
+
+location ==='NK' ? console.log(BANNED_WARNING) : console.log('price:', currency+totalCost)
 
