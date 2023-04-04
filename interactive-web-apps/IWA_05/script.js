@@ -29,9 +29,9 @@ else {
     currency ='$'}
 
 // free shipping
-if(location === 'RSA' && usersCost >= 1000){
+if(location == 'RSA' && usersCost >= 1000){
         shipping = 0
-}else if (location === 'NAM' && usersCost >= 60){
+}else if (location == 'NAM' && usersCost >= 60){
     shipping = 0
 }
 
@@ -41,5 +41,5 @@ if (shipping == 0 && customers !== 1) { console.log(FREE_WARNING) }
 
 totalCost = usersCost + shipping
 
-location ==='NK' ? console.log(BANNED_WARNING) : console.log('price:', currency+totalCost)
+location =='NK' ? console.log(BANNED_WARNING) : console.log('price:', currency+totalCost)
 
