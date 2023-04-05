@@ -7,12 +7,14 @@ currency = 'R'
 shipping = 0
 customers = 1
 
+let name;
+
 //selecting the number of items
 shoes = 300 * 1
 toys = 100 * 5
-shirts = 150 * NONE_SELECTED
+shirts = 150 * 15
 batteries = 35 * 2
-pens = 5 * NONE_SELECTED 
+pens = 5 * 5
 usersCost = shoes + toys + shirts + batteries + pens
 
 // shipping cost
