@@ -52,8 +52,11 @@ const christmas = 6
 const futureId = 9
 
 // Do not change code above this comment
-
-console.log(holidays.futureId.name || 'ID {futureId} not created yet')
+if (9 in holidays) {
+    console.log(holidays[9].name)
+} else {
+    console.log('ID 9 not created yet')
+}
 
 copied = holidays.christmas
 copied = { name: 'X-mas Day' }
