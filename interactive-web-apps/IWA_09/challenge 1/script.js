@@ -8,8 +8,8 @@ const size = 'large'
 const expenses = {
     food: 51.7501,
     transport:  10.2,
-}
-  
+    }
+
 const tax = {
     734: '3%',
     234: '20%',
@@ -30,8 +30,11 @@ const rent = {
 
 // You can change below however you want
 
-const taxAsDecimal = tax.913 / 100
-const startingAfterTax = salary * 1 - taxAsDecimal
-const type = lodging + size
-const balance = expenses(transport) - expenses(food) - expenses(rent.type) 
-console.log(balance)
+const taxAsDecimal = parseFloat(tax['913']) / 100
+const taxAmount = salary * taxAsDecimal
+const salaryAfterTax = salary - taxAmount
+const rentKey = `${size}-${lodging}`
+// console.log(rentKey) - check if the key is correct
+const rentAmount = rent[rentKey]
+const balance = salaryAfterTax - rentAmount - expenses.food - expenses.transport
+console.log(balance.toFixed(2))
