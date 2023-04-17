@@ -1,23 +1,23 @@
 // for order 1
-const order1= document(order1),
-const biscuits1= document(biscuits1),
-const donuts1= document(donuts1),
-const pancakes1= document(pancakes1),
-const status1= document(status1)
+const order1= document.querySelector('[data-key = "order1"]');
+const biscuits1= order1.querySelector('.biscuits1.count');
+const donuts1= order1.querySelector('.donuts1.count');
+const pancakes1= order1.querySelector('.pancakes1.count');
+const status1= order1.querySelector('.status1 dd');
 
 //for order 2
-const order2 = document(order2),
-const biscuits2= document(biscuits2),
-const donuts2 = document(donuts2),
-const pancakes2 = document(pancakes2),
-const status2 = document(status2)
+const order2= document.querySelector('[data-key = "order2"]');
+const biscuits2= order2.querySelector('.biscuits2.count');
+const donuts2= order2.querySelector('.donuts2.count');
+const pancakes2= order2.querySelector('.pancakes2.count');
+const status2= order2.querySelector('.status2 dd');
 
 //For order 3
-const order3 = document(order3),
-const biscuits3 = document(biscuits3),
-const donuts3 = document(donuts3),
-const pancakes3 = document(pancakes3),
-const status3 = document(status3)
+const order3= document.querySelector('[data-key = "order3"]');
+const biscuits3= order2.querySelector('.biscuits3.count');
+const donuts3= order2.querySelector('.donuts3.count');
+const pancakes3= order2.querySelector('.pancakes3.count');
+const status3= order2.querySelector('.status3 dd');
 
 biscuits1= root.biscuits1,
 donuts1 = root.donuts1,
