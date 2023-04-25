@@ -10,10 +10,11 @@ const divider = '----------------------------------'
 
 // Only change below this line
 
-const owed = parseInt('R' + leoBalance + sarahBalance)
-const leo = "{leoName} + {leoSurname} + \"Owed\" + \"R\" + {sarahBalance}"
-const sarah = "{leoName} + {surname} + \"Owed\" + \"R\" + {sarahBalance}"
-const total = "Total amount owed: "
-const result = leo + sarah + divider + divider + total + owed + divider
+const owed = (parseFloat(leoBalance) + parseFloat(sarahBalance)).toFixed(2)
+const leo = `${leoName} ${leoSurname} Owed R ${-parseFloat(leoBalance).toFixed(2)}\n`
+const sarah = `${sarahName} ${sarahSurname} Owed R ${-parseFloat(sarahBalance).toFixed(2)}\n`
+const total = `  Total amount owed: R ${owed}\n`
+const result = `\n${leo}${sarah}${divider}\n${total}${divider}`
+
 
 console.log(result)
