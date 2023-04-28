@@ -79,3 +79,44 @@ const MONTHS = [
     fragment.appendChild(title);
   
     const list = document.createElement("dl");
+
+    //day, month, and year from the latest race date
+  const day = date.getDate();
+  const month = MONTHS[date.getMonth()];
+  const year = date.getFullYear();
+
+  // total time for the latest race
+  const total = latestTime.reduce((acc, curr) => acc + curr, 0);
+  const hours = Math.floor(total / 60);
+  const minutes = total % 60;
+
+  // Use template literals to create the HTML for the athlete's information
+  list.innerHTML = /* html */ `
+    <dt>Athlete</dt>
+    <dd>${firstName} ${surname}</dd>
+
+    <dt>Total Races</dt>
+    <dd>${races.length}</dd>
+
+    <dt>Event Date (Latest)</dt>
+    <dd>${day} ${month} ${year}</dd>
+
+    <dt>Total Time (Latest)</dt>
+    <dd>${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}</dd>
+  `;
+
+  fragment.appendChild(list);
+  //fragment containing the athlete's information
+  return fragment;
+}
+
+// Get the data for the two athletes and store it in variables
+const NM372Data = data.find((athlete) => athlete.id === "NM372");
+const SV782Data = data.find((athlete) => athlete.id === "SV782");
+
+const NM372Element = document.querySelector("#NM372");
+const SV782Element = document.querySelector("#SV782");
+
+//append the HTML for the two athletes
+NM372Element.appendChild(createHtml(NM372Data));
+SV782Element.appendChild(createHtml(SV782Data));
