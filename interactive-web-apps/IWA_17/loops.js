@@ -18,102 +18,60 @@ const MONTHS = [
 const getDaysInMonth = (date) => new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
 // Only edit below 
 
-const createArray = (length, initialValue = null) => {
-  return Array.from({ length }, () => initialValue);
-};
+// Wait for the page to load
+window.addEventListener('DOMContentLoaded', () => {
+  // Get the current date
+  const currentDate = new Date();
 
-const createData = () => {
-  const current = new Date();
-  current.setDate(1);
+  // Get the title element and set its text content to the current month and year
+  const titleElement = document.querySelector('h1[data-title]');
+  titleElement.textContent = currentDate.toLocaleString('default', { month: 'long' }) + ' ' + currentDate.getFullYear();
 
-  const startDay = current.getDay();
-  const daysInMonth = new Date(
-    current.getFullYear(),
-    current.getMonth() + 1,
-    0
-  ).getDate();
+  // Get the table body element and generate the calendar
+  const tableBody = document.querySelector('tbody[data-content]');
+  tableBody.innerHTML = generateCalendar(currentDate);
 
-  const weeks = createArray(5);
-  const days = createArray(7);
+  // Function to generate the calendar HTML for a given month
+  function generateCalendar(date) {
+    // Get the number of days in the month
+    const daysInMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
 
-  let day = 1;
-  for (let weekIndex in weeks) {
-    const weekData = {
-      week: parseInt(weekIndex) + 1,
-      days: [],
-    };
+    // Set the date to the first day of the month
+    date.setDate(1);
 
-    for (let dayIndex in days) {
-      const dayOfWeek = parseInt(dayIndex) + 1;
-      const isValid = day > 0 && day <= daysInMonth;
+    // Get the day of the week of the first day of the month
+    const firstDayOfWeek = date.getDay();
 
-      const dayData = {
-        dayOfWeek,
-        value: isValid ? day : "",
-        isToday: false,
-        isWeekend: dayOfWeek === 1 || dayOfWeek === 7,
-        isAlternate: weekData.week % 2 === 0,
-      };
+    // Create an array to hold the calendar rows
+    const rows = [];
 
-      const date = new Date(current.getFullYear(), current.getMonth(), day);
-      const today = new Date();
+    // Loop through each week of the month
+    for (let week = 0; week < 6; week++) {
+      // Create an array to hold the days of the week for this row
+      const days = [];
 
-      if (date.toDateString() === today.toDateString()) {
-        dayData.isToday = true;
+      // Loop through each day of the week
+      for (let dayOfWeek = 0; dayOfWeek < 7; dayOfWeek++) {
+        // Calculate the day of the month for this cell
+        const dayOfMonth = week * 7 + dayOfWeek - firstDayOfWeek + 1;
+
+        // Check if this cell is within the current month
+        const isCurrentMonth = dayOfMonth >= 1 && dayOfMonth <= daysInMonth;
+
+        // Create the cell HTML
+        const cellHtml = `<td class="table__cell ${!isCurrentMonth ? 'table__cell_inactive' : ''}">${isCurrentMonth ? dayOfMonth : ''}</td>`;
+
+        // Add the cell to the row
+        days.push(cellHtml);
       }
 
-      weekData.days.push(dayData);
-      day += 1;
+      // Add the row to the calendar
+      rows.push(`<tr>${days.join('')}</tr>`);
     }
 
-    weeks[weekIndex] = weekData;
+    // Return the generated calendar HTML
+    return rows.join('');
   }
 
-  return weeks;
-};
+});
 
-const addCell = (existing, classString, value) => {
-  return `${existing}
-          <td class="${classString}">
-            ${value}
-          </td>`;
-};
-
-const createHtml = (data) => {
-  let result = '<table>';
-
-  // Create header row with day names
-  let headerRow = '';
-  const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  for (let day of daysOfWeek) {
-    headerRow = addCell(headerRow, 'table__cell table__cell_header', day);
-  }
-  result = `${result}<thead><tr>${headerRow}</tr></thead>`;
-
-  // Create table body with weeks and days
-  let bodyRows = '';
-  for (let week of data) {
-    let inner = '';
-    inner = addCell(inner, 'table__cell table__cell_sidebar', `Week ${week.week}`);
-
-    for (let day of week.days) {
-      let classString = 'table__cell';
-
-      if (day.isToday) classString += ' table__cell_today';
-      if (day.isWeekend) classString += ' table__cell_weekend';
-      if (day.isAlternate) classString += ' table__cell_alternate';
-
-      inner = addCell(inner, classString, day.value);
-    }
-
-    bodyRows = `${bodyRows}<tr>${inner}</tr>`;
-  }
-  result = `${result}<tbody>${bodyRows}</tbody></table>`;
-
-  return result;
-};
-
-// Create and display the calendar
-const data = createData();
-const calendarHtml = createHtml(data);
-document.getElementById('calendar').innerHTML = calendarHtml;
