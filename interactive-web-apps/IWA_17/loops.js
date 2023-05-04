@@ -1,77 +1,110 @@
 // scripts.js
+// scripts.js
 
 const MONTHS = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
 ];
 
 const getDaysInMonth = (date) => new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
-// Only edit below 
 
-// Wait for the page to load
-window.addEventListener('DOMContentLoaded', () => {
-  // Get the current date
-  const currentDate = new Date();
+const createData = () => {
+  const current = new Date();
+  current.setDate(1);
 
-  // Get the title element and set its text content to the current month and year
-  const titleElement = document.querySelector('h1[data-title]');
-  titleElement.textContent = currentDate.toLocaleString('default', { month: 'long' }) + ' ' + currentDate.getFullYear();
+  const startDay = current.getDay();
+  const daysInMonth = getDaysInMonth(current);
 
-  // Get the table body element and generate the calendar
-  const tableBody = document.querySelector('tbody[data-content]');
-  tableBody.innerHTML = generateCalendar(currentDate);
+  const weeks = [];
+  let days = [];
 
-  // Function to generate the calendar HTML for a given month
-  function generateCalendar(date) {
-    // Get the number of days in the month
-    const daysInMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+  for (let day = 1; day <= daysInMonth; day++) {
+    const date = new Date(current.getFullYear(), current.getMonth(), day);
+    const dayOfWeek = date.getDay();
 
-    // Set the date to the first day of the month
-    date.setDate(1);
-
-    // Get the day of the week of the first day of the month
-    const firstDayOfWeek = date.getDay();
-
-    // Create an array to hold the calendar rows
-    const rows = [];
-
-    // Loop through each week of the month
-    for (let week = 0; week < 6; week++) {
-      // Create an array to hold the days of the week for this row
-      const days = [];
-
-      // Loop through each day of the week
-      for (let dayOfWeek = 0; dayOfWeek < 7; dayOfWeek++) {
-        // Calculate the day of the month for this cell
-        const dayOfMonth = week * 7 + dayOfWeek - firstDayOfWeek + 1;
-
-        // Check if this cell is within the current month
-        const isCurrentMonth = dayOfMonth >= 1 && dayOfMonth <= daysInMonth;
-
-        // Create the cell HTML
-        const cellHtml = `<td class="table__cell ${!isCurrentMonth ? 'table__cell_inactive' : ''}">${isCurrentMonth ? dayOfMonth : ''}</td>`;
-
-        // Add the cell to the row
-        days.push(cellHtml);
-      }
-
-      // Add the row to the calendar
-      rows.push(`<tr>${days.join('')}</tr>`);
+    if (dayOfWeek === 0 && days.length > 0) {
+      weeks.push(days);
+      days = [];
     }
 
-    // Return the generated calendar HTML
-    return rows.join('');
+    days.push({ dayOfWeek, day });
   }
 
-});
+  if (days.length > 0) {
+    weeks.push(days);
+  }
 
+  return weeks;
+};
+
+const addCell = (existing, classString, value) => {
+  const cell = document.createElement('td');
+  cell.classList.add('table__cell');
+  classString.split(' ').forEach((className) => cell.classList.add(className));
+  cell.textContent = value ?? '';
+
+  existing.appendChild(cell);
+};
+
+const renderCalendar = () => {
+  const title = document.querySelector('[data-title]');
+  const content = document.querySelector('[data-content]');
+
+  const currentMonth = new Date().getMonth();
+  const currentYear = new Date().getFullYear();
+
+  title.textContent = `${MONTHS[currentMonth]} ${currentYear}`;
+
+  content.innerHTML = '';
+
+  const weeks = createData();
+  let isAlternate = false;
+
+  weeks.forEach((days, index) => {
+    const row = document.createElement('tr');
+
+    const weekNumber = document.createElement('td');
+    weekNumber.classList.add('table__cell', 'table__cell_sidebar');
+    weekNumber.textContent = `Week ${index + 1}`;
+
+    if (isAlternate) {
+      weekNumber.classList.add('table__cell_alternate');
+    }
+
+    row.appendChild(weekNumber);
+
+    days.forEach(({ dayOfWeek, day }) => {
+      const cellClassString = ['table__cell'];
+
+      if (dayOfWeek === 0 || dayOfWeek === 6) {
+        cellClassString.push('table__cell_weekend');
+      }
+
+      if (day === new Date().getDate()) {
+        cellClassString.push('table__cell_today');
+      }
+
+      if (isAlternate) {
+        cellClassString.push('table__cell_alternate');
+      }
+
+      const cellValue = day || '';
+      addCell(row, cellClassString.join(' '), cellValue);
+    });
+
+    content.appendChild(row);
+    isAlternate = !isAlternate;
+  });
+};
+
+window.addEventListener('load', renderCalendar);
