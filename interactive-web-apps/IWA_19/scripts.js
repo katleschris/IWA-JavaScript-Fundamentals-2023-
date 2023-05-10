@@ -315,3 +315,50 @@ searchButton.addEventListener('click', (e) => {
    dialog.removeAttribute('open');
   });
 
+  // toggle between dark and light mode
+  const themeButton = document.querySelector('[data-header-settings]');
+  const themeDialog = document.querySelector('[data-settings-overlay]');
+  
+  themeButton.addEventListener('click', () => {
+    themeDialog.setAttribute('open', true);
+  });
+  
+  const themeCancelButton = document.querySelector('[data-settings-cancel]');
+  
+  themeCancelButton.addEventListener('click', () => {
+    themeDialog.removeAttribute('open');
+  });
+
+  function toggleTheme() {
+    const body = document.querySelector('body');
+    const header = document.querySelector('.list');
+  
+    if (body.classList.contains('dark-theme')) {
+      body.classList.remove('dark-theme');
+      header.style.backgroundColor = '#f5f5f5';
+      header.style.color = '#212121';
+      
+    } else {
+      body.classList.add('dark-theme');
+      header.style.backgroundColor = '#212121';
+      header.style.color = '#f5f5f5';
+      
+    }
+  }
+  
+  
+  
+  
+  const apply = document.querySelector('[apply-theme]')
+  apply.addEventListener('click', (e) => {
+    e.preventDefault();
+    toggleTheme();
+    themeDialog.removeAttribute('open');
+  })
+  
+  
+  
+  
+  
+  
+  
