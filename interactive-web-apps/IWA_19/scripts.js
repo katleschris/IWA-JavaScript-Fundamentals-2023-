@@ -1,14 +1,16 @@
+//import data from a seperate module
 import { BOOKS_PER_PAGE, authors, genres, books } from './data.js';
 
-const bookList = document.querySelector('[data-list-items]');
+// Get references to relevant HTML elements
+const bookListElement = document.querySelector('[data-list-items]');
 const searchInput = document.querySelector('.search-input');
 const modeButton = document.querySelector('.mode-button');
 
+// Set initial values for some variables
 let currentPage = 1;
 let currentBooks = [];
 
-
-//make a function for a list of the books
+// This function renders a list of books on the page
 function renderBookList() {
   const screenWidth = window.innerWidth;
   let numBooksPerRow;
@@ -26,13 +28,18 @@ function renderBookList() {
 
   // Calculate the width of the book divs based on the number of books per row
   const bookWidth = (screenWidth / numBooksPerRow) - 20; // Subtract 20px for the total margin between the divs
-  bookList.replaceChildren();
+  
+  //clear existing book list
+  bookListElement.replaceChildren();
+
+   // Loop through each book and create a new div to display it
   for (let i = 0; i < BOOKS_PER_PAGE * currentPage; i++) {
     const picture = books[i].image;
     const title = books[i].title;
     const authorCode = books[i].author;
     const author = authors[authorCode];
-
+  
+    // Create the new book div
     const bookItem = document.createElement("div");
     bookItem.style.width = `${bookWidth}px`;
     bookItem.style.height = "auto";
@@ -76,7 +83,7 @@ function renderBookList() {
       const preview = createBookPreview(books[i]);
     });
 
-    bookList.appendChild(bookItem);
+    bookListElement.appendChild(bookItem);
   }
 }
 renderBookList()
@@ -250,7 +257,7 @@ function searchBooks() {
   
     // Calculate the width of the book divs based on the number of books per row
     const bookWidth = (screenWidth / numBooksPerRow) - 20; // Subtract 20px for the total margin between the divs
-    bookList.replaceChildren();
+    bookListElement.replaceChildren();
     for (let i = 0; i < booksToRender.length; i++) {
       const picture = booksToRender[i].image;
       const title = booksToRender[i].title;
@@ -301,7 +308,7 @@ function searchBooks() {
         const preview = createBookPreview(booksToRender[i]);
       });
   
-      bookList.appendChild(bookItem);
+      bookListElement.appendChild(bookItem);
     }
   }
 
@@ -345,9 +352,6 @@ searchButton.addEventListener('click', (e) => {
       
     }
   }
-  
-  
-  
   
   const apply = document.querySelector('[apply-theme]')
   apply.addEventListener('click', (e) => {
